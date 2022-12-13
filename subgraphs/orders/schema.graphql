@@ -1,8 +1,5 @@
 # noinspection GraphQLTypeRedefinition
 
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
-
 type Query {
   """
   Get a specific order by id. Meant to be used for a detailed view of an order
@@ -31,10 +28,10 @@ type Order @key(fields: "id") {
   items: [Variant!]!
 }
 
-type User @key(fields: "id", resolvable: false) {
-  id: ID!
+type User @key(fields: "id") @extends {
+  id: ID! @external
 }
 
-type Variant @key(fields: "id", resolvable: false) {
-  id: ID!
+type Variant @key(fields: "id") @extends {
+  id: ID! @external
 }

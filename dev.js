@@ -9,33 +9,33 @@ import { start as gateway } from "@apollosolutions/retail-supergraph-gateway/ser
 const LOCAL_SUBGRAPH_CONFIG = [
   {
     name: "discovery",
-    port: 4001,
-    url: `http://localhost:4001/graphql`,
+    port: 4101,
+    url: `http://localhost:4101/graphql`,
   },
   {
     name: "inventory",
-    port: 4002,
-    url: `http://localhost:4002/graphql`,
+    port: 4102,
+    url: `http://localhost:4102/graphql`,
   },
   {
     name: "orders",
-    port: 4003,
-    url: `http://localhost:4003/graphql`,
+    port: 4103,
+    url: `http://localhost:4103/graphql`,
   },
   {
     name: "products",
-    port: 4004,
-    url: `http://localhost:4004/graphql`,
+    port: 4104,
+    url: `http://localhost:4104/graphql`,
   },
   {
     name: "shipping",
-    port: 4005,
-    url: `http://localhost:4005/graphql`,
+    port: 4105,
+    url: `http://localhost:4105/graphql`,
   },
   {
     name: "users",
-    port: 4006,
-    url: `http://localhost:4006/graphql`,
+    port: 4106,
+    url: `http://localhost:4106/graphql`,
   },
 ];
 
@@ -57,5 +57,5 @@ const getLocalPort = (subgraphName) =>
   await new Promise((r) => setTimeout(r, 1000));
 
   // start gateway
-  await gateway(4000, LOCAL_SUBGRAPH_CONFIG);
+  await gateway(4010, LOCAL_SUBGRAPH_CONFIG);
 })();

@@ -1,4 +1,14 @@
-# noinspection GraphQLTypeRedefinition
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external(reason: String) on OBJECT | FIELD_DEFINITION
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION 
 
 type Query {
   """
@@ -20,18 +30,16 @@ type Query {
   Get a specific variant by id. Useful for the product details page or checkout page
   """
   variant(id: ID!): Variant
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
 }
 
-"""
-Search filters for when returning Products
-"""
+"""Search filters for when returning Products"""
 input ProductSearchInput {
   titleStartsWith: String
 }
 
-"""
-Search filters for when returning Variants
-"""
+"""Search filters for when returning Variants"""
 input VariantSearchInput {
   sizeStartsWith: String
 }
@@ -40,15 +48,15 @@ input VariantSearchInput {
 A specific product sold by our store. This contains all the high level details but is not the purchasable item.
 See Variant for more info.
 """
-type Product @key(fields: "id") {
+type Product
+  @key(fields: "id")
+{
   id: ID!
   title: String
   description: String
   mediaUrl: String
 
-  """
-  Variants of the products to view specific size/color/price options
-  """
+  """Variants of the products to view specific size/color/price options"""
   variants(searchInput: VariantSearchInput): [Variant]
 }
 
@@ -56,27 +64,21 @@ type Product @key(fields: "id") {
 A variant of a product which is a unique combination of attributes like size and color
 Variants are the entities that are added to carts and purchased
 """
-type Variant @key(fields: "id") {
+type Variant
+  @key(fields: "id")
+{
   id: ID!
 
-  """
-  Link back to the parent Product
-  """
+  """Link back to the parent Product"""
   product: Product
 
-  """
-  Optional color option for this variant
-  """
+  """Optional color option for this variant"""
   colorway: String
 
-  """
-  Price in decimals for this variant
-  """
+  """Price in decimals for this variant"""
   price: Float!
 
-  """
-  Optional size option for this variant
-  """
+  """Optional size option for this variant"""
   size: String
 
   """
@@ -89,3 +91,13 @@ type Variant @key(fields: "id") {
   """
   weight: Float
 }
+
+scalar _FieldSet
+
+scalar _Any
+
+type _Service {
+  sdl: String
+}
+
+union _Entity = Product | Variant

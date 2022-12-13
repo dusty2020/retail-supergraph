@@ -1,11 +1,7 @@
 # noinspection GraphQLTypeRedefinition
 
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
-
-
-type User @key(fields: "id") {
-  id: ID!
+type User @key(fields: "id") @extends {
+  id: ID! @external
 
   """
   Suggest products for this user
@@ -13,6 +9,6 @@ type User @key(fields: "id") {
   recommendedProducts: [Product]
 }
 
-type Product @key(fields: "id", resolvable: false) {
-  id: ID!
+type Product @key(fields: "id") @extends {
+  id: ID! @external
 }

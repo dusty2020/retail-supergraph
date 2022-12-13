@@ -1,10 +1,7 @@
 # noinspection GraphQLTypeRedefinition
 
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@external", "@requires"])
-
-type Order @key(fields: "id") {
-  id: ID!
+type Order @key(fields: "id") @extends {
+  id: ID! @external
   buyer: User! @external
   items: [Variant!]! @external
 
@@ -14,12 +11,12 @@ type Order @key(fields: "id") {
   shippingCost: Float @requires(fields: "items { weight } buyer { shippingAddress }")
 }
 
-type User @key(fields: "id", resolvable: false) {
-  id: ID!
+type User @key(fields: "id") @extends {
+  id: ID! @external
   shippingAddress: String @external
 }
 
-type Variant @key(fields: "id", resolvable: false) {
-  id: ID!
+type Variant @key(fields: "id") @extends {
+  id: ID! @external
   weight: Float @external
 }

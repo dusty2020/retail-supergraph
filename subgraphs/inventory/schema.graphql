@@ -1,8 +1,5 @@
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
-
-type Variant @key(fields: "id") {
-  id: ID!
+type Variant @key(fields: "id") @extends {
+  id: ID! @external
 
   """
   Checks the warehouse API for inventory information.
